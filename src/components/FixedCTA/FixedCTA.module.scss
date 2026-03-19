@@ -1,0 +1,62 @@
+@use '../../styles/variables' as *;
+
+.ctaWrapper {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: $z-cta;
+
+  @media (min-width: $bp-tablet) {
+    bottom: 2.5rem;
+  }
+}
+
+.cta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 2rem;
+  background: $dark;
+  color: $white;
+  border-radius: 100px;
+  font-family: $font-headline;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  box-shadow:
+    0 4px 20px rgba($dark, 0.2),
+    0 1px 3px rgba($dark, 0.08);
+  transition:
+    transform 0.5s $ease-luxury,
+    box-shadow 0.5s ease,
+    background-color 0.5s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 8px 30px rgba($dark, 0.25),
+      0 2px 6px rgba($dark, 0.1);
+    background: $charcoal;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  @media (min-width: $bp-tablet) {
+    padding: 1.125rem 2.5rem;
+    font-size: 0.8125rem;
+    gap: 0.875rem;
+  }
+}
+
+.chatIcon {
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+.ctaText {
+  font-weight: 500;
+}

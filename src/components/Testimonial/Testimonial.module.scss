@@ -1,0 +1,182 @@
+@use '../../styles/variables' as *;
+
+.section {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $space-3xl $space-md;
+  background: $ivory;
+  overflow: hidden;
+}
+
+// Parallax depth elements
+.depthLayer {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.orbSoft {
+  position: absolute;
+  top: 10%;
+  right: -10%;
+  width: 50vw;
+  height: 50vw;
+  max-width: 600px;
+  max-height: 600px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba($baby-pink, 0.1) 0%, transparent 70%);
+  will-change: transform;
+}
+
+.quoteMark {
+  position: absolute;
+  top: 12%;
+  left: 8%;
+  font-family: $font-display;
+  font-size: clamp(8rem, 20vw, 18rem);
+  line-height: 0.8;
+  color: rgba($burgundy, 0.04);
+  will-change: transform;
+  user-select: none;
+
+  @media (max-width: $bp-tablet) {
+    left: 2%;
+    font-size: clamp(5rem, 15vw, 10rem);
+  }
+}
+
+.topLine {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1px;
+  height: 80px;
+  background: linear-gradient(180deg, rgba($dark, 0.08) 0%, transparent 100%);
+  transform-origin: top center;
+  will-change: transform;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 900px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.label {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: $space-xl;
+  font-family: $font-headline;
+  font-size: 0.6875rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: $mid-grey;
+  font-weight: 500;
+}
+
+.labelLine {
+  width: 40px;
+  height: 1px;
+  background: rgba($dark, 0.12);
+}
+
+.quote {
+  margin-bottom: $space-lg;
+}
+
+.lineWrap {
+  overflow: hidden;
+  padding-bottom: 0.1em;
+}
+
+.lineText {
+  display: block;
+  font-family: $font-display;
+  font-size: clamp(1.5rem, 3.2vw, 2.75rem);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: $dark;
+  text-transform: uppercase;
+}
+
+.attribution {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: $space-2xl;
+}
+
+.attrRule {
+  width: 30px;
+  height: 1px;
+  background: $burgundy;
+  margin-bottom: 0.25rem;
+}
+
+.attrName {
+  font-family: $font-headline;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: $charcoal;
+  font-weight: 500;
+}
+
+.attrTitle {
+  font-family: $font-body;
+  font-size: 0.8125rem;
+  color: $mid-grey;
+}
+
+.stats {
+  display: flex;
+  gap: $space-lg;
+  padding-top: $space-lg;
+  border-top: $hairline;
+  will-change: transform;
+
+  @media (max-width: $bp-tablet) {
+    gap: $space-md;
+  }
+}
+
+.stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.25rem;
+  min-width: 120px;
+
+  @media (max-width: $bp-tablet) {
+    min-width: 90px;
+  }
+}
+
+.statNumber {
+  font-family: $font-display;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  color: $burgundy;
+  letter-spacing: -0.02em;
+}
+
+.statLabel {
+  font-family: $font-headline;
+  font-size: 0.625rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: $mid-grey;
+  font-weight: 500;
+}

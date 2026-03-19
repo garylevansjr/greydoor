@@ -1,0 +1,66 @@
+// ─────────────────────────────────────────────
+// Grey Door — Design Tokens
+// ─────────────────────────────────────────────
+
+// Brand Palette
+$burgundy: #68161A;
+$marigold: #E2BC31;
+$baby-pink: #FDE5DD;
+$starlet-pink: #E8BDD8;
+$forest-green: #1D3B28;
+$fern: #638B48;
+
+// Neutrals
+$white: #FFFFFF;
+$ivory: #FAF8F5;
+$cream: #F5F0EB;
+$warm-grey: #E8E3DE;
+$mid-grey: #B0A89F;
+$charcoal: #3A3632;
+$dark: #1A1816;
+$black: #0D0C0B;
+
+// Functional
+$text-primary: $dark;
+$text-secondary: $charcoal;
+$text-muted: $mid-grey;
+$bg-primary: $ivory;
+$bg-secondary: $cream;
+
+// Typography
+$font-display: 'Tenor Sans', Georgia, serif;
+$font-headline: 'brandon-grotesque', 'Brandon Grotesque', sans-serif;
+$font-body: 'Nexa', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+
+// Spacing Scale
+$space-xs: 0.5rem;
+$space-sm: 1rem;
+$space-md: 2rem;
+$space-lg: 4rem;
+$space-xl: 6rem;
+$space-2xl: 8rem;
+$space-3xl: 12rem;
+
+// Easing
+$ease-smooth: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+$ease-luxury: cubic-bezier(0.16, 1, 0.3, 1);
+$ease-reveal: cubic-bezier(0.77, 0, 0.175, 1);
+
+// Breakpoints
+$bp-mobile: 480px;
+$bp-tablet: 768px;
+$bp-desktop: 1024px;
+$bp-wide: 1440px;
+$bp-ultra: 1920px;
+
+// Z-index layers
+$z-base: 1;
+$z-content: 10;
+$z-header: 100;
+$z-cta: 90;
+$z-overlay: 500;
+$z-loader: 1000;
+
+// Hairline
+$hairline: 1px solid rgba($dark, 0.12);
+$hairline-light: 1px solid rgba($white, 0.15);

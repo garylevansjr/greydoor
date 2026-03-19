@@ -1,0 +1,166 @@
+@use '../../styles/variables' as *;
+
+$transition-z: 2000;
+
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: $transition-z;
+  pointer-events: none;
+}
+
+// Door panels
+.panel {
+  position: absolute;
+  top: 0;
+  width: 50%;
+  height: 100%;
+  will-change: transform;
+  overflow: hidden;
+}
+
+.panelLeft {
+  left: 0;
+  transform: translateX(-100%);
+
+  &.closing {
+    transform: translateX(-100%);
+    animation: slideInLeft 0.8s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+  }
+
+  &.closed {
+    transform: translateX(0);
+  }
+
+  &.opening {
+    transform: translateX(0);
+    animation: slideOutLeft 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+.panelRight {
+  right: 0;
+  transform: translateX(100%);
+
+  &.closing {
+    transform: translateX(100%);
+    animation: slideInRight 0.8s cubic-bezier(0.77, 0, 0.175, 1) forwards;
+  }
+
+  &.closed {
+    transform: translateX(0);
+  }
+
+  &.opening {
+    transform: translateX(0);
+    animation: slideOutRight 0.9s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+}
+
+.panelGradient {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 30%, rgba($baby-pink, 0.06) 0%, transparent 60%),
+    radial-gradient(ellipse at 50% 70%, rgba($cream, 0.08) 0%, transparent 50%),
+    linear-gradient(180deg, $ivory 0%, $white 30%, $ivory 70%, $cream 100%);
+}
+
+// Decorative hairlines inside door panels
+.panelLine {
+  position: absolute;
+  top: 10%;
+  width: 1px;
+  height: 80%;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba($dark, 0.04) 20%,
+    rgba($dark, 0.04) 80%,
+    transparent 100%
+  );
+}
+
+// Center vertical line
+.centerLine {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 1px;
+  height: 100%;
+  background: $dark;
+  transform: translateX(-50%) scaleY(0);
+  transform-origin: top center;
+  will-change: transform;
+  z-index: $transition-z + 2;
+}
+
+.lineDrawing {
+  animation: lineGrow 0.6s cubic-bezier(0.77, 0, 0.175, 1) 0.2s forwards;
+}
+
+.lineVisible {
+  transform: translateX(-50%) scaleY(1);
+}
+
+.lineFading {
+  transform: translateX(-50%) scaleY(1);
+  animation: lineFade 0.4s ease-out forwards;
+}
+
+// Brand mark
+.brandMark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.8);
+  opacity: 0;
+  z-index: $transition-z + 3;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.brandVisible {
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.brandIcon {
+  width: 40px;
+  height: auto;
+  opacity: 0.6;
+
+  @media (min-width: $bp-tablet) {
+    width: 50px;
+  }
+}
+
+// Animations
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); }
+  to { transform: translateX(0); }
+}
+
+@keyframes slideOutLeft {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+@keyframes slideOutRight {
+  from { transform: translateX(0); }
+  to { transform: translateX(100%); }
+}
+
+@keyframes lineGrow {
+  from { transform: translateX(-50%) scaleY(0); }
+  to { transform: translateX(-50%) scaleY(1); }
+}
+
+@keyframes lineFade {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}

@@ -1,0 +1,31 @@
+@use '../../styles/variables' as *;
+
+.textWrapper {
+  width: 100%;
+}
+
+.lineWrap {
+  overflow: hidden;
+  padding-bottom: 0.05em;
+}
+
+.lineInner {
+  will-change: transform;
+}
+
+.wordsContainer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 0.3em;
+}
+
+.wordWrap {
+  display: inline-flex;
+  overflow: hidden;
+  padding-bottom: 0.05em;
+}
+
+.wordInner {
+  display: inline-block;
+  will-change: transform, opacity;
+}

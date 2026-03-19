@@ -1,0 +1,194 @@
+@use '../../styles/variables' as *;
+
+.footer {
+  position: relative;
+  width: 100%;
+  padding: $space-3xl $space-md $space-xl;
+  background:
+    radial-gradient(ellipse at 30% 30%, rgba($forest-green, 0.08) 0%, transparent 50%),
+    radial-gradient(ellipse at 70% 70%, rgba($burgundy, 0.05) 0%, transparent 50%),
+    linear-gradient(180deg, $dark 0%, #120f0d 100%);
+  color: $white;
+  overflow: hidden;
+}
+
+.inner {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.ctaSection {
+  text-align: center;
+  max-width: 600px;
+  margin-bottom: $space-xl;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1.25rem;
+}
+
+.ctaLabel {
+  font-family: $font-headline;
+  font-size: 0.6875rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: rgba($white, 0.45);
+  font-weight: 500;
+}
+
+.ctaHeading {
+  font-family: $font-display;
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: $white;
+  text-transform: uppercase;
+}
+
+.ctaBody {
+  font-family: $font-body;
+  font-size: clamp(0.875rem, 1vw, 1rem);
+  line-height: 1.7;
+  color: rgba($white, 0.5);
+  max-width: 440px;
+}
+
+.contactRow {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.contactLink {
+  font-family: $font-body;
+  font-size: 0.875rem;
+  color: rgba($white, 0.65);
+  transition: color 0.3s ease;
+  letter-spacing: 0.02em;
+
+  &:hover {
+    color: $white;
+  }
+}
+
+.contactDivider {
+  width: 1px;
+  height: 14px;
+  background: rgba($white, 0.15);
+}
+
+.ctaButton {
+  display: inline-flex;
+  align-items: center;
+  margin-top: $space-sm;
+  padding: 0.875rem 2.25rem;
+  border: 1px solid rgba($white, 0.2);
+  border-radius: 100px;
+  font-family: $font-headline;
+  font-size: 0.6875rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: $white;
+  font-weight: 500;
+  transition:
+    background-color 0.4s ease,
+    border-color 0.4s ease;
+
+  &:hover {
+    background: rgba($white, 0.08);
+    border-color: rgba($white, 0.35);
+  }
+}
+
+.divider {
+  width: 100%;
+  height: 1px;
+  background: rgba($white, 0.08);
+  transform-origin: left center;
+  margin-bottom: $space-lg;
+}
+
+.bottomRow {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $space-md;
+
+  @media (min-width: $bp-tablet) {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.bottomLeft {
+  display: flex;
+  align-items: center;
+}
+
+.footerLogo {
+  height: 18px;
+  width: auto;
+  filter: brightness(0) invert(1);
+  opacity: 0.7;
+}
+
+.footerNav {
+  display: flex;
+  gap: $space-md;
+}
+
+.footerLink {
+  font-family: $font-headline;
+  font-size: 0.6875rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba($white, 0.4);
+  transition: color 0.3s ease;
+  font-weight: 500;
+
+  &:hover {
+    color: rgba($white, 0.8);
+  }
+}
+
+.bottomRight {
+  display: flex;
+  align-items: center;
+}
+
+.location {
+  font-family: $font-headline;
+  font-size: 0.6875rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: rgba($white, 0.3);
+  font-weight: 400;
+}
+
+.watermark {
+  font-family: $font-display;
+  font-size: clamp(5rem, 14vw, 14rem);
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+  color: $white;
+  text-transform: uppercase;
+  text-align: center;
+  margin-top: $space-xl;
+  white-space: nowrap;
+  pointer-events: none;
+  user-select: none;
+}
+
+.copyright {
+  font-family: $font-body;
+  font-size: 0.75rem;
+  color: rgba($white, 0.2);
+  margin-top: $space-lg;
+  text-align: center;
+}
