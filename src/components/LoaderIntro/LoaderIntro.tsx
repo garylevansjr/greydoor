@@ -191,13 +191,14 @@ export default function LoaderIntro({ onComplete }: LoaderIntroProps) {
         </div>
       </motion.div>
 
-      {/* Vertical line */}
+      {/* Vertical line — draws during line phase, fades before doors open */}
       <AnimatePresence>
-        {(phase === 'line' || phase === 'doors') && (
+        {phase === 'line' && (
           <motion.div
             className={styles.verticalLine}
             initial={{ scaleY: 0 }}
             animate={{ scaleY: 1 }}
+            exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: easing.reveal }}
           />
         )}
