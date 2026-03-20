@@ -288,12 +288,15 @@ export default function Hero({ show, onHeaderReady }: HeroProps) {
               delay: 0.1,
             }}
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/assets/home/hero.png"
-              alt="Gray Door — Luxury concierge services in Houston"
-              className={styles.heroImage}
-            />
+            <picture>
+              <source media="(max-width: 768px)" srcSet="/assets/home/hero-m.png" />
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src="/assets/home/hero.png"
+                alt="Gray Door — Luxury concierge services in Houston"
+                className={styles.heroImage}
+              />
+            </picture>
           </motion.div>
           <div className={styles.imageOverlay} data-parallax="hero-overlay" />
 
