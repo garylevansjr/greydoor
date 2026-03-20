@@ -11,12 +11,7 @@ if (typeof window !== 'undefined') {
   gsap.registerPlugin(ScrollTrigger);
 }
 
-const TESTIMONIAL_LINES = [
-  'Lauren and Grey Door have become',
-  'the invisible structure behind our lives.',
-  'What used to feel chaotic now feels handled —',
-  'quietly, beautifully, and without friction.',
-];
+const TESTIMONIAL_TEXT = '\u201CLauren and Grey Door have become the invisible structure behind our lives. What used to feel chaotic now feels handled \u2014 quietly, beautifully, and without friction.\u201D';
 
 const STATS = [
   { number: '200+', label: 'Families Served' },
@@ -81,15 +76,27 @@ export default function Testimonial() {
         },
       });
 
-      // Stats bar — gentle upward drift
+      // Stats — faster upward drift
       gsap.to('[data-parallax="test-stats"]', {
+        yPercent: -25,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 1.2,
+        },
+      });
+
+      // Quote — slower drift, creating depth separation from stats
+      gsap.to('[data-parallax="test-quote"]', {
         yPercent: -8,
         ease: 'none',
         scrollTrigger: {
           trigger: section,
-          start: 'center center',
+          start: 'top bottom',
           end: 'bottom top',
-          scrub: 1.5,
+          scrub: 2,
         },
       });
     }, section);
@@ -109,76 +116,135 @@ export default function Testimonial() {
       <div className={styles.topLine} data-parallax="test-line-top" />
 
       <div className={styles.inner}>
-        {/* Label */}
-        <motion.div
-          className={styles.label}
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: easing.luxury }}
-        >
-          <div className={styles.labelLine} />
-          <span>Testimonial</span>
-          <div className={styles.labelLine} />
-        </motion.div>
-
-        {/* Quote */}
-        <blockquote className={styles.quote}>
-          {TESTIMONIAL_LINES.map((line, i) => (
-            <div key={i} className={styles.lineWrap}>
-              <motion.span
-                className={styles.lineText}
-                initial={{ y: '120%' }}
-                animate={isInView ? { y: '0%' } : {}}
-                transition={{
-                  duration: 1.1,
-                  ease: easing.luxury,
-                  delay: 0.3 + i * 0.12,
-                }}
-              >
-                {line}
-              </motion.span>
-            </div>
-          ))}
-        </blockquote>
-
-        {/* Attribution */}
-        <motion.div
-          className={styles.attribution}
-          initial={{ opacity: 0 }}
-          animate={isInView ? { opacity: 1 } : {}}
-          transition={{ duration: 0.8, ease: easing.smooth, delay: 1.2 }}
-        >
-          <div className={styles.attrRule} />
-          <p className={styles.attrName}>Caroline M.</p>
-          <p className={styles.attrTitle}>River Oaks, Houston</p>
-        </motion.div>
-
-        {/* Stats bar */}
+        {/* Stats bar — above quote */}
         <motion.div
           ref={statsRef}
           className={styles.stats}
           data-parallax="test-stats"
-          initial={{ opacity: 0, y: 30 }}
-          animate={statsInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, ease: easing.luxury, delay: 0.2 }}
         >
           {STATS.map((stat, i) => (
-            <div key={i} className={styles.stat}>
+            <motion.div
+              key={i}
+              className={styles.stat}
+              initial={{ opacity: 0, y: 40, scale: 0.9 }}
+              animate={statsInView ? { opacity: 1, y: 0, scale: 1 } : {}}
+              transition={{
+                duration: 1,
+                ease: [0.16, 1, 0.3, 1],
+                delay: 0.15 + i * 0.15,
+              }}
+            >
               <motion.span
                 className={styles.statNumber}
-                initial={{ opacity: 0, y: 15 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={statsInView ? { opacity: 1, y: 0 } : {}}
                 transition={{
-                  duration: 0.7,
-                  ease: easing.luxury,
-                  delay: 0.4 + i * 0.1,
+                  duration: 0.9,
+                  ease: [0.16, 1, 0.3, 1],
+                  delay: 0.3 + i * 0.15,
                 }}
               >
                 {stat.number}
               </motion.span>
-              <span className={styles.statLabel}>{stat.label}</span>
-            </div>
+              <motion.span
+                className={styles.statLabel}
+                initial={{ opacity: 0 }}
+                animate={statsInView ? { opacity: 1 } : {}}
+                transition={{
+                  duration: 0.6,
+                  delay: 0.6 + i * 0.15,
+                }}
+              >
+                {stat.label}
+              </motion.span>
+            </motion.div>
           ))}
+        </motion.div>
+
+        {/* Divider line — grows from center */}
+        <motion.div
+          className={styles.statsDivider}
+          initial={{ scaleX: 0 }}
+          animate={isInView ? { scaleX: 1 } : {}}
+          transition={{
+            duration: 1.2,
+            ease: [0.16, 1, 0.3, 1],
+            delay: 0.6,
+          }}
+        />
+
+        {/* Label */}
+        <motion.div
+          className={styles.label}
+          initial={{ opacity: 0, letterSpacing: '0.5em' }}
+          animate={isInView ? { opacity: 1, letterSpacing: '0.25em' } : {}}
+          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1], delay: 0.8 }}
+        >
+          <motion.div
+            className={styles.labelLine}
+            initial={{ scaleX: 0 }}
+            animate={isInView ? { scaleX: 1 } : {}}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.9 }}
+          />
+          <span>Testimonial</span>
+          <motion.div
+            className={styles.labelLine}
+            initial={{ scaleX: 0 }}
+            animate={isInView ? { scaleX: 1 } : {}}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.9 }}
+          />
+        </motion.div>
+
+        {/* Quote — word by word reveal */}
+        <blockquote className={styles.quote} data-parallax="test-quote">
+          <p className={styles.quoteText}>
+            {TESTIMONIAL_TEXT.split(' ').map((word, i) => (
+              <motion.span
+                key={i}
+                className={styles.word}
+                initial={{ opacity: 0, y: 20, filter: 'blur(4px)' }}
+                animate={isInView ? { opacity: 1, y: 0, filter: 'blur(0px)' } : {}}
+                transition={{
+                  duration: 0.6,
+                  ease: [0.16, 1, 0.3, 1],
+                  delay: 1.0 + i * 0.04,
+                }}
+              >
+                {word}{' '}
+              </motion.span>
+            ))}
+          </p>
+        </blockquote>
+
+        {/* Attribution — fade up with rule growing */}
+        <motion.div
+          className={styles.attribution}
+          initial={{ opacity: 0 }}
+          animate={isInView ? { opacity: 1 } : {}}
+          transition={{ duration: 0.6, delay: 2.4 }}
+        >
+          <motion.div
+            className={styles.attrRule}
+            initial={{ scaleX: 0 }}
+            animate={isInView ? { scaleX: 1 } : {}}
+            transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 2.4 }}
+          />
+          <motion.p
+            className={styles.attrName}
+            initial={{ opacity: 0, y: 10 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 2.6 }}
+          >
+            Caroline M.
+          </motion.p>
+          <motion.p
+            className={styles.attrTitle}
+            initial={{ opacity: 0, y: 10 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 2.8 }}
+          >
+            River Oaks, Houston
+          </motion.p>
         </motion.div>
       </div>
     </section>

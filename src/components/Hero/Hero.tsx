@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useEffect, useState, useCallback } from 'react';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { easing } from '@/lib/animations';
@@ -16,13 +16,29 @@ interface HeroProps {
   onHeaderReady?: () => void;
 }
 
-// Phases: idle → contract → reveal → done
-type HeroPhase = 'idle' | 'contract' | 'reveal' | 'done';
+// Phases: idle → contract → reveal → swap → done
+type HeroPhase = 'idle' | 'contract' | 'reveal' | 'swap' | 'done';
+
+const TITLE_SEQUENCE = ['Lifestyle', 'Management', 'Grey Door'];
+const TITLE_INTERVAL = 2500; // ms between each swap
+const TITLE_START_DELAY = 2000; // ms after sequence starts before first swap
+
+// Per-character animation variants
+const charExit = {
+  initial: { y: 0, opacity: 1 },
+  exit: { y: '-100%', opacity: 0 },
+};
+
+const charEnter = {
+  initial: { y: '100%', opacity: 0 },
+  animate: { y: 0, opacity: 1 },
+};
 
 export default function Hero({ show, onHeaderReady }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const parallaxRef = useRef<boolean>(false);
   const [phase, setPhase] = useState<HeroPhase>('idle');
+  const [titleIndex, setTitleIndex] = useState(0);
   const phaseStarted = useRef(false);
 
   const startSequence = useCallback(() => {
@@ -35,11 +51,19 @@ export default function Hero({ show, onHeaderReady }: HeroProps) {
     // Phase 2: slide down + title up (after 1s)
     setTimeout(() => setPhase('reveal'), 1000);
 
-    // Phase 3: done + header appears
+    // Phase 3: header appears
     setTimeout(() => {
       setPhase('done');
       onHeaderReady?.();
     }, 1000);
+
+    // Title sequence: cycle through each word
+    TITLE_SEQUENCE.forEach((_, i) => {
+      if (i === 0) return; // first is already showing
+      setTimeout(() => {
+        setTitleIndex(i);
+      }, TITLE_START_DELAY + (i - 1) * TITLE_INTERVAL);
+    });
   }, [onHeaderReady]);
 
   useEffect(() => {
@@ -178,7 +202,38 @@ export default function Hero({ show, onHeaderReady }: HeroProps) {
           ease: easing.luxury,
         }}
       >
-        <h1 className={styles.title}>Grey Door</h1>
+        <h1 className={styles.title}>
+          <span className={styles.titleInner}>
+            <AnimatePresence mode="wait">
+              <motion.span
+                key={titleIndex}
+                className={styles.titleChars}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+              >
+                {TITLE_SEQUENCE[titleIndex].split('').map((char, i) => (
+                  <motion.span
+                    key={`${titleIndex}-${i}`}
+                    className={styles.char}
+                    variants={{
+                      initial: { y: '100%', opacity: 0 },
+                      animate: { y: 0, opacity: 1 },
+                      exit: { y: '-100%', opacity: 0 },
+                    }}
+                    transition={{
+                      duration: 0.5,
+                      ease: [0.16, 1, 0.3, 1],
+                      delay: i * 0.03,
+                    }}
+                  >
+                    {char === ' ' ? '\u00A0' : char}
+                  </motion.span>
+                ))}
+              </motion.span>
+            </AnimatePresence>
+          </span>
+        </h1>
       </motion.div>
 
       {/* Hero inner — starts 100vw×100vh, mask contracts, then slides down to reveal title */}

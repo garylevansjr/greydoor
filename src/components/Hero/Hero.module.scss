@@ -150,6 +150,21 @@
   font-weight: 400;
   text-transform: uppercase;
   white-space: nowrap;
+  overflow: hidden;
+}
+
+.titleInner {
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+.titleChars {
+  display: inline-flex;
+}
+
+.char {
+  display: inline-block;
 }
 
 .tagline {

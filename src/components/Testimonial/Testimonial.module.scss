@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: $space-3xl $space-md;
+  padding: $space-2xl $space-md $space-lg;
   background: $ivory;
   overflow: hidden;
 }
@@ -65,7 +65,7 @@
 .inner {
   position: relative;
   z-index: 1;
-  max-width: 900px;
+  max-width: 1100px;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -79,7 +79,7 @@
   gap: 1.5rem;
   margin-bottom: $space-xl;
   font-family: $font-headline;
-  font-size: 0.6875rem;
+  font-size: clamp(0.625rem, 0.9vw, 0.875rem);
   letter-spacing: 0.25em;
   text-transform: uppercase;
   color: $mid-grey;
@@ -87,28 +87,29 @@
 }
 
 .labelLine {
-  width: 40px;
+  width: clamp(30px, 4vw, 50px);
   height: 1px;
   background: rgba($dark, 0.12);
+  transform-origin: center;
 }
 
 .quote {
   margin-bottom: $space-lg;
+  max-width: 1000px;
 }
 
-.lineWrap {
-  overflow: hidden;
-  padding-bottom: 0.1em;
-}
-
-.lineText {
-  display: block;
-  font-family: $font-display;
+.quoteText {
+  font-family: 'operetta-12', serif;
+  font-weight: 200;
+  font-style: normal;
   font-size: clamp(1.5rem, 3.2vw, 2.75rem);
-  line-height: 1.35;
-  letter-spacing: -0.01em;
+  line-height: 1.5;
+  letter-spacing: -0.005em;
   color: $dark;
-  text-transform: uppercase;
+}
+
+.word {
+  display: inline-block;
 }
 
 .attribution {
@@ -116,7 +117,7 @@
   flex-direction: column;
   align-items: center;
   gap: 0.75rem;
-  margin-bottom: $space-2xl;
+  margin-bottom: $space-md;
 }
 
 .attrRule {
@@ -124,11 +125,12 @@
   height: 1px;
   background: $burgundy;
   margin-bottom: 0.25rem;
+  transform-origin: center;
 }
 
 .attrName {
   font-family: $font-headline;
-  font-size: 0.75rem;
+  font-size: clamp(0.6875rem, 0.9vw, 0.875rem);
   letter-spacing: 0.15em;
   text-transform: uppercase;
   color: $charcoal;
@@ -137,44 +139,46 @@
 
 .attrTitle {
   font-family: $font-body;
-  font-size: 0.8125rem;
+  font-size: clamp(0.75rem, 1vw, 0.9375rem);
   color: $mid-grey;
 }
 
 .stats {
   display: flex;
-  gap: $space-lg;
-  padding-top: $space-lg;
-  border-top: $hairline;
+  gap: clamp(2rem, 6vw, 5rem);
+  padding-bottom: $space-xl;
+  margin-bottom: 0;
   will-change: transform;
+}
 
-  @media (max-width: $bp-tablet) {
-    gap: $space-md;
-  }
+.statsDivider {
+  width: 60%;
+  height: 1px;
+  background: rgba($dark, 0.08);
+  margin-bottom: $space-xl;
+  transform-origin: center;
 }
 
 .stat {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
-  min-width: 120px;
-
-  @media (max-width: $bp-tablet) {
-    min-width: 90px;
-  }
+  gap: clamp(0.25rem, 0.5vw, 0.5rem);
+  min-width: clamp(100px, 14vw, 180px);
 }
 
 .statNumber {
   font-family: $font-display;
-  font-size: clamp(1.5rem, 2.5vw, 2rem);
-  color: $burgundy;
-  letter-spacing: -0.02em;
+  font-size: clamp(5rem, 10vw, 9.25rem);
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px #1D3B28;
 }
 
 .statLabel {
   font-family: $font-headline;
-  font-size: 0.625rem;
+  font-size: clamp(0.625rem, 1vw, 0.875rem);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: $mid-grey;
