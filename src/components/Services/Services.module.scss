@@ -2,7 +2,7 @@
 
 .section {
   position: relative;
-  background: $dark;
+  background: #f9f8f7 url('/assets/home/services-bg.png') center top / 100% auto no-repeat;
   overflow: hidden;
 }
 
@@ -292,7 +292,7 @@
     font-size: clamp(5rem, 15vw, 14rem);
     line-height: 0.85;
     letter-spacing: -0.03em;
-    color: $white;
+    color: $dark;
     text-transform: uppercase;
     white-space: nowrap;
   }
