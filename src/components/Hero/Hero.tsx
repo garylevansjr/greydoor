@@ -35,11 +35,11 @@ export default function Hero({ show, onHeaderReady }: HeroProps) {
     // Phase 2: slide down + title up (after 1s)
     setTimeout(() => setPhase('reveal'), 1000);
 
-    // Phase 3: done + header appears (after 3s total)
+    // Phase 3: done + header appears
     setTimeout(() => {
       setPhase('done');
       onHeaderReady?.();
-    }, 3000);
+    }, 1000);
   }, [onHeaderReady]);
 
   useEffect(() => {
