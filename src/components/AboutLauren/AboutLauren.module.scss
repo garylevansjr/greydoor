@@ -124,6 +124,29 @@
   max-width: 460px;
 }
 
+.signature {
+  max-width: 600px;
+}
+
+.signatureLottie {
+  width: 100%;
+  height: auto;
+}
+
+.quote {
+  font-family: 'operetta-12', serif;
+  font-weight: 200;
+  font-style: normal;
+  font-size: clamp(1.875rem, 3.3vw, 2.625rem);
+  line-height: 1.5;
+  letter-spacing: -0.005em;
+  color: $dark;
+  margin: 0;
+  padding: 0;
+  border: none;
+  max-width: 460px;
+}
+
 .cta {
   display: inline-flex;
   align-items: center;

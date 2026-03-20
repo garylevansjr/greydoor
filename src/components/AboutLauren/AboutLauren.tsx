@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useState, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -15,6 +15,10 @@ export default function AboutLauren() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.25 });
   const gsapInitRef = useRef(false);
+  const signatureContainerRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const lottieInstance = useRef<any>(null);
+  const [signatureLoaded, setSignatureLoaded] = useState(false);
 
   useEffect(() => {
     const section = sectionRef.current;
@@ -98,6 +102,45 @@ export default function AboutLauren() {
     return () => ctx.revert();
   }, []);
 
+  // Load Lottie signature via CDN script to avoid SSR/bundler issues
+  useEffect(() => {
+    const container = signatureContainerRef.current;
+    if (!container) return;
+
+    let destroyed = false;
+
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const win = window as any;
+
+    const init = (data: unknown) => {
+      if (destroyed || !win.lottie) return;
+      lottieInstance.current = win.lottie.loadAnimation({
+        container,
+        renderer: 'svg',
+        loop: false,
+        autoplay: false,
+        animationData: data,
+      });
+      setSignatureLoaded(true);
+    };
+
+    const loadData = () => fetch('/assets/media/signature.json').then((r) => r.json());
+
+    if (win.lottie) {
+      loadData().then(init);
+    } else {
+      const script = document.createElement('script');
+      script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js';
+      script.onload = () => loadData().then(init);
+      document.head.appendChild(script);
+    }
+
+    return () => {
+      destroyed = true;
+      lottieInstance.current?.destroy();
+    };
+  }, []);
+
   return (
     <section ref={sectionRef} className={styles.section} id="about">
       {/* Parallax depth elements */}
@@ -143,17 +186,24 @@ export default function AboutLauren() {
             meaningful relationships.
           </motion.p>
 
-          <motion.p
-            className={styles.body}
+          <motion.blockquote
+            className={styles.quote}
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.9, ease: easing.luxury, delay: 0.45 }}
           >
-            Gray Door was built on a simple truth: the most successful people don&apos;t
-            need more resources — they need someone they deeply trust to manage the
-            complexity behind the scenes. Lauren is that person. Discreet, capable,
-            and quietly exceptional.
-          </motion.p>
+            &ldquo;My goal is to make life feel beautifully handled.&rdquo;
+          </motion.blockquote>
+
+          <motion.div
+            className={styles.signature}
+            initial={{ opacity: 0 }}
+            animate={isInView ? { opacity: 1 } : {}}
+            transition={{ duration: 0.6, ease: easing.luxury, delay: 0 }}
+            onAnimationComplete={() => { if (isInView && signatureLoaded) lottieInstance.current?.play(); }}
+          >
+            <div ref={signatureContainerRef} className={styles.signatureLottie} />
+          </motion.div>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
