@@ -56,7 +56,7 @@ export default function Header({ show }: HeaderProps) {
               {/* Logo */}
               <TransitionLink href="/" className={styles.logo}>
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src="/assets/brand/logo.svg" alt="Grey Door" className={styles.logoImg} />
+                <img src="/assets/brand/logo.svg" alt="Gray Door" className={styles.logoImg} />
               </TransitionLink>
 
               {/* Menu button */}

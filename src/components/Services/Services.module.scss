@@ -16,10 +16,7 @@
 
 // Parallax background depth
 .bgDepth {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
+  display: none;
 }
 
 .bgOrbGreen {
@@ -151,9 +148,11 @@
 }
 
 .cardImageWrap {
-  flex: 1;
+  height: 55%;
+  flex-shrink: 0;
   overflow: hidden;
   position: relative;
+  border-radius: 12px 12px 0 0;
 
   &::after {
     content: '';
@@ -205,12 +204,13 @@
 }
 
 .cardBody {
-  flex-shrink: 0;
+  flex: 1;
   padding: 1.2vw 1.5vw 1.5vw;
   background: rgba($ivory, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
   border-top: 1px solid rgba($white, 0.2);
+  border-radius: 0 0 12px 12px;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -286,15 +286,20 @@
   will-change: transform;
   z-index: 0;
 
+}
+
+.bigTitleInner {
+  display: inline-flex;
+  font-family: $font-display;
+  font-size: clamp(5rem, 15vw, 14rem);
+  line-height: 0.85;
+  letter-spacing: -0.03em;
+  color: $dark;
+  text-transform: uppercase;
+  white-space: nowrap;
+
   span {
-    display: block;
-    font-family: $font-display;
-    font-size: clamp(5rem, 15vw, 14rem);
-    line-height: 0.85;
-    letter-spacing: -0.03em;
-    color: $dark;
-    text-transform: uppercase;
-    white-space: nowrap;
+    display: inline-block;
   }
 }
 

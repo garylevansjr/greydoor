@@ -258,15 +258,30 @@ export default function Services() {
         </div>
       </div>
 
-      {/* Large "Services" watermark */}
-      <div ref={titleRef} className={styles.bigTitle} data-parallax="svc-watermark">
+      {/* Large "Services" watermark — per-character stagger */}
+      <div ref={titleRef} className={styles.bigTitle}>
         <motion.span
-          initial={{ opacity: 0, y: 40 }}
-          whileInView={{ opacity: 0.075, y: 0 }}
+          initial="hidden"
+          whileInView="visible"
           viewport={{ once: true, amount: 0.3 }}
-          transition={{ duration: 1.2, ease: easing.luxury }}
+          className={styles.bigTitleInner}
         >
-          Services
+          {'Services'.split('').map((char, i) => (
+            <motion.span
+              key={i}
+              variants={{
+                hidden: { opacity: 0, y: 60 },
+                visible: { opacity: 0.075, y: 0 },
+              }}
+              transition={{
+                duration: 1,
+                ease: easing.luxury,
+                delay: i * 0.06,
+              }}
+            >
+              {char}
+            </motion.span>
+          ))}
         </motion.span>
       </div>
     </section>

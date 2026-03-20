@@ -84,7 +84,7 @@ export default function AboutPage() {
 
       <main>
         <InnerPageHero
-          label="Grey Door"
+          label="Gray Door"
           title="About"
           subtitle="The quiet force behind Houston's most discerning families."
         />
@@ -146,7 +146,7 @@ export default function AboutPage() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/assets/home/hero.png"
-                  alt="Lauren — Founder of Grey Door"
+                  alt="Lauren — Founder of Gray Door"
                   style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 20%' }}
                 />
               </div>
@@ -203,9 +203,9 @@ export default function AboutPage() {
               </motion.h2>
 
               {[
-                'Lauren built Grey Door on a quiet conviction: that the most accomplished people don\'t need more — they need someone they can trust completely to handle everything else.',
+                'Lauren built Gray Door on a quiet conviction: that the most accomplished people don\'t need more — they need someone they can trust completely to handle everything else.',
                 'Her career began in executive support, where she discovered a rare ability to anticipate needs before they surface. Over the years, she cultivated a trusted network of vetted professionals, artisans, and service providers across Houston and beyond.',
-                'Today, Grey Door serves as the invisible architecture behind some of Houston\'s most distinguished families. Lauren\'s value isn\'t just execution — it\'s access, taste, timing, discretion, and the kind of trust that only comes from years of flawless delivery.',
+                'Today, Gray Door serves as the invisible architecture behind some of Houston\'s most distinguished families. Lauren\'s value isn\'t just execution — it\'s access, taste, timing, discretion, and the kind of trust that only comes from years of flawless delivery.',
               ].map((text, i) => (
                 <motion.p
                   key={i}

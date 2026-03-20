@@ -182,7 +182,7 @@ export default function ServicesPage() {
 
       <main>
         <InnerPageHero
-          label="Grey Door"
+          label="Gray Door"
           title="Services"
           subtitle="Every detail of your life, thoughtfully managed. We offer a comprehensive suite of concierge and lifestyle services — each one tailored to you."
         />

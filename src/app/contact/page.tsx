@@ -19,7 +19,7 @@ export default function ContactPage() {
 
       <main>
         <InnerPageHero
-          label="Grey Door"
+          label="Gray Door"
           title="Contact"
           subtitle="Every relationship begins with a conversation. Tell us about your life, your needs, and how we can help."
         />

@@ -4,7 +4,7 @@ import { useRef } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import styles from './Testimonial.module.scss';
 
-const TESTIMONIAL_TEXT = '\u201CLauren and Grey Door have become the invisible structure behind our lives. What used to feel chaotic now feels handled \u2014 quietly, beautifully, and without friction.\u201D';
+const TESTIMONIAL_TEXT = '\u201CLauren and Gray Door have become the invisible structure behind our lives. What used to feel chaotic now feels handled \u2014 quietly, beautifully, and without friction.\u201D';
 
 const STATS = [
   { number: '200+', label: 'Families Served' },

@@ -68,7 +68,7 @@ export default function Footer() {
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
                 src="/assets/brand/logo.svg"
-                alt="Grey Door"
+                alt="Gray Door"
                 className={styles.footerLogo}
               />
             </TransitionLink>
@@ -94,7 +94,7 @@ export default function Footer() {
           animate={isInView ? { opacity: 0.04, y: 0 } : {}}
           transition={{ duration: 1.2, ease: easing.luxury, delay: 0.6 }}
         >
-          Grey Door
+          Gray Door
         </motion.div>
 
         {/* Copyright */}
@@ -104,7 +104,7 @@ export default function Footer() {
           animate={isInView ? { opacity: 1 } : {}}
           transition={{ duration: 0.6, delay: 0.8 }}
         >
-          &copy; {new Date().getFullYear()} Grey Door. All rights reserved.
+          &copy; {new Date().getFullYear()} Gray Door. All rights reserved.
         </motion.p>
       </div>
     </footer>

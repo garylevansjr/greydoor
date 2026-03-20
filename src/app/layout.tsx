@@ -4,18 +4,18 @@ import { TransitionProvider } from '@/components/PageTransition/TransitionContex
 import TransitionOverlay from '@/components/PageTransition/TransitionOverlay';
 
 export const metadata: Metadata = {
-  title: 'Grey Door — Luxury Concierge & Lifestyle Management | Houston',
+  title: 'Gray Door — Luxury Concierge & Lifestyle Management | Houston',
   description:
-    'Grey Door is a premium concierge and lifestyle management agency in Houston, Texas. Bespoke personal assistance, travel coordination, event planning, and more for discerning individuals and families.',
+    'Gray Door is a premium concierge and lifestyle management agency in Houston, Texas. Bespoke personal assistance, travel coordination, event planning, and more for discerning individuals and families.',
   keywords: [
     'luxury concierge Houston',
     'lifestyle management',
     'personal assistant Houston',
     'bespoke concierge services',
-    'Grey Door',
+    'Gray Door',
   ],
   openGraph: {
-    title: 'Grey Door — Luxury Concierge & Lifestyle Management',
+    title: 'Gray Door — Luxury Concierge & Lifestyle Management',
     description:
       'Bespoke concierge and lifestyle management for discerning individuals and families in Houston.',
     type: 'website',

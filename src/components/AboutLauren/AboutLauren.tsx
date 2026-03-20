@@ -149,7 +149,7 @@ export default function AboutLauren() {
             animate={isInView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.9, ease: easing.luxury, delay: 0.45 }}
           >
-            Grey Door was built on a simple truth: the most successful people don&apos;t
+            Gray Door was built on a simple truth: the most successful people don&apos;t
             need more resources — they need someone they deeply trust to manage the
             complexity behind the scenes. Lauren is that person. Discreet, capable,
             and quietly exceptional.
@@ -181,8 +181,8 @@ export default function AboutLauren() {
             <div className={styles.imageInner} data-parallax="about-image-inner">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
-                src="/assets/home/hero.png"
-                alt="Lauren — Founder of Grey Door"
+                src="/assets/home/lauren.png"
+                alt="Lauren — Founder of Gray Door"
                 className={styles.image}
               />
             </div>

@@ -24,7 +24,7 @@ const OVERLAY_SEQUENCE = ['Lifestyle', 'Management', 'Agency'];
 const OVERLAY_INTERVAL = 2500; // ms between each swap
 const OVERLAY_START_DELAY = 1000; // ms after reveal before overlay starts
 
-const HERO_DESC = 'Grey Door is a premium concierge service that handles the details, logistics, and personal requests that keep busy lives running beautifully.';
+const HERO_DESC = 'Gray Door is a premium concierge service that handles the details, logistics, and personal requests that keep busy lives running beautifully.';
 
 export default function Hero({ show, onHeaderReady }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null);
@@ -199,7 +199,7 @@ export default function Hero({ show, onHeaderReady }: HeroProps) {
           ease: easing.luxury,
         }}
       >
-        <h1 className={styles.title}>Grey Door</h1>
+        <h1 className={styles.title}>Gray Door</h1>
       </motion.div>
 
       {/* Hero inner — starts 100vw×100vh, mask contracts, then slides down to reveal title */}
@@ -244,7 +244,7 @@ export default function Hero({ show, onHeaderReady }: HeroProps) {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/assets/home/hero.png"
-              alt="Grey Door — Luxury concierge services in Houston"
+              alt="Gray Door — Luxury concierge services in Houston"
               className={styles.heroImage}
             />
           </motion.div>
