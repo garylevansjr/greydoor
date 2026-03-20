@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState, useCallback } from 'react';
 import { motion } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -13,11 +13,38 @@ if (typeof window !== 'undefined') {
 
 interface HeroProps {
   show: boolean;
+  onHeaderReady?: () => void;
 }
 
-export default function Hero({ show }: HeroProps) {
+// Phases: idle → contract → reveal → done
+type HeroPhase = 'idle' | 'contract' | 'reveal' | 'done';
+
+export default function Hero({ show, onHeaderReady }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const parallaxRef = useRef<boolean>(false);
+  const [phase, setPhase] = useState<HeroPhase>('idle');
+  const phaseStarted = useRef(false);
+
+  const startSequence = useCallback(() => {
+    if (phaseStarted.current) return;
+    phaseStarted.current = true;
+
+    // Phase 1: mask contracts (0 → 1s)
+    setPhase('contract');
+
+    // Phase 2: slide down + title up (after 1s)
+    setTimeout(() => setPhase('reveal'), 1000);
+
+    // Phase 3: done + header appears (after 3s total)
+    setTimeout(() => {
+      setPhase('done');
+      onHeaderReady?.();
+    }, 3000);
+  }, [onHeaderReady]);
+
+  useEffect(() => {
+    if (show) startSequence();
+  }, [show, startSequence]);
 
   useEffect(() => {
     if (!show || parallaxRef.current) return;
@@ -136,22 +163,50 @@ export default function Hero({ show }: HeroProps) {
         ))}
       </div>
 
-      {/* Hero inner — image mask */}
+      {/* GREY DOOR title — positioned behind the inner section, uncovered as inner slides down */}
       <motion.div
-        className={styles.heroInner}
-        initial={{ scale: 1, y: 0 }}
+        className={styles.titleWrap}
+        data-parallax="hero-title"
+        initial={{ opacity: 0 }}
         animate={
-          show
-            ? {
-                scale: 0.92,
-                y: '12vh',
-              }
-            : {}
+          phase === 'reveal' || phase === 'done'
+            ? { opacity: 1 }
+            : { opacity: 0 }
         }
         transition={{
-          duration: 1.8,
+          duration: 0.8,
           ease: easing.luxury,
-          delay: 0.3,
+        }}
+      >
+        <h1 className={styles.title}>Grey Door</h1>
+      </motion.div>
+
+      {/* Hero inner — starts 100vw×100vh, mask contracts, then slides down to reveal title */}
+      <motion.div
+        className={styles.heroInner}
+        initial={{
+          clipPath: 'inset(0% 0% 0% 0%)',
+          y: 0,
+        }}
+        animate={
+          phase === 'contract'
+            ? {
+                clipPath: 'inset(2% 3% 2% 3% round 4px)',
+                y: 0,
+              }
+            : phase === 'reveal' || phase === 'done'
+              ? {
+                  clipPath: 'inset(2% 3% 2% 3% round 4px)',
+                  y: '22vh',
+                }
+              : {
+                  clipPath: 'inset(0% 0% 0% 0%)',
+                  y: 0,
+                }
+        }
+        transition={{
+          duration: phase === 'contract' ? 1.2 : 1.6,
+          ease: easing.luxury,
         }}
       >
         <div className={styles.imageMask} data-parallax="hero-image">
@@ -174,31 +229,6 @@ export default function Hero({ show }: HeroProps) {
           </motion.div>
           <div className={styles.imageOverlay} data-parallax="hero-overlay" />
         </div>
-      </motion.div>
-
-      {/* GREY DOOR title — slides up from behind the inner section */}
-      <motion.div
-        className={styles.titleWrap}
-        data-parallax="hero-title"
-        initial={{ y: '30%', opacity: 0 }}
-        animate={
-          show
-            ? {
-                y: '0%',
-                opacity: 1,
-              }
-            : {}
-        }
-        transition={{
-          duration: 1.6,
-          ease: easing.luxury,
-          delay: 0.8,
-        }}
-      >
-        <h1 className={styles.title}>
-          <span className={styles.titleLine}>Grey</span>
-          <span className={styles.titleLine}>Door</span>
-        </h1>
       </motion.div>
 
       {/* Subtle tagline */}

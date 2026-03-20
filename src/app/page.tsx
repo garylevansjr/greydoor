@@ -12,16 +12,17 @@ import Footer from '@/components/Footer/Footer';
 
 export default function Home() {
   const [loaderComplete, setLoaderComplete] = useState(false);
+  const [headerReady, setHeaderReady] = useState(false);
 
   return (
     <>
       <LoaderIntro onComplete={() => setLoaderComplete(true)} />
 
-      <Header show={loaderComplete} />
-      <FixedCTA show={loaderComplete} />
+      <Header show={headerReady} />
+      <FixedCTA show={headerReady} />
 
       <main>
-        <Hero show={loaderComplete} />
+        <Hero show={loaderComplete} onHeaderReady={() => setHeaderReady(true)} />
         <Testimonial />
         <Services />
         <AboutLauren />

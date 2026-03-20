@@ -3,13 +3,8 @@
 .hero {
   position: relative;
   width: 100vw;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
   overflow: hidden;
-  padding-bottom: 8rem;
+  padding-bottom: 6rem;
 }
 
 .background {
@@ -90,10 +85,10 @@
 .heroInner {
   position: relative;
   z-index: 2;
-  width: 100%;
+  width: 100vw;
   height: 100vh;
   overflow: hidden;
-  will-change: transform;
+  will-change: clip-path, transform;
 }
 
 .imageMask {
@@ -131,36 +126,30 @@
 }
 
 .titleWrap {
-  position: relative;
-  z-index: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1; // below heroInner so image covers the title initially
   text-align: center;
-  margin-top: -5rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  height: 22vh; // matches the slide-down distance so title sits in the revealed gap
+  padding-top: 5rem; // clear the header
   will-change: transform;
-
-  @media (min-width: $bp-tablet) {
-    margin-top: -8rem;
-  }
+  pointer-events: none;
 }
 
 .title {
   font-family: $font-display;
-  font-size: clamp(4rem, 18vw, 14rem);
-  line-height: 0.85;
-  letter-spacing: -0.03em;
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
   color: $dark;
   font-weight: 400;
   text-transform: uppercase;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.titleLine {
-  display: block;
-
-  &:last-child {
-    margin-top: -0.02em;
-  }
+  white-space: nowrap;
 }
 
 .tagline {
