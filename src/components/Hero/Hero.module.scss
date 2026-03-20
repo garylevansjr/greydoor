@@ -150,21 +150,38 @@
   font-weight: 400;
   text-transform: uppercase;
   white-space: nowrap;
+}
+
+// Overlay text on the hero image
+.overlayTextWrap {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: clamp(3rem, 8vh, 6rem);
+  pointer-events: none;
+}
+
+.overlayTextInner {
   overflow: hidden;
 }
 
-.titleInner {
-  display: block;
-  position: relative;
-  overflow: hidden;
-}
-
-.titleChars {
+.overlayChars {
   display: inline-flex;
 }
 
-.char {
+.overlayChar {
   display: inline-block;
+  font-family: $font-display;
+  font-size: clamp(2.25rem, 5.75vw, 5.1rem); // 40% smaller than title
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-weight: 400;
+  text-transform: uppercase;
+  color: rgba($white, 0.9);
+  text-shadow: 0 2px 20px rgba($dark, 0.15);
 }
 
 .tagline {
