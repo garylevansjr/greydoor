@@ -197,7 +197,7 @@ export default function Hero({ show, onHeaderReady }: HeroProps) {
             : phase === 'reveal' || phase === 'done'
               ? {
                   clipPath: 'inset(2% 3% 2% 3% round 4px)',
-                  y: '22vh',
+                  y: '26vh',
                 }
               : {
                   clipPath: 'inset(0% 0% 0% 0%)',
