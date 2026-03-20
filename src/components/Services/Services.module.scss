@@ -2,8 +2,20 @@
 
 .section {
   position: relative;
-  background: #f9f8f7 url('/assets/home/services-bg.png') center top / 100% auto no-repeat;
+  background: #f9f8f7;
   overflow: hidden;
+}
+
+.bgImage {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: -15%;
+  right: -15%;
+  background: url('/assets/home/services-bg.png') center bottom / 200% auto no-repeat;
+  z-index: 0;
+  will-change: transform;
+  pointer-events: none;
 }
 
 .bgGradient {
@@ -308,7 +320,7 @@
 
 // ─── Mobile: swipeable carousel ───────────────────────────────
 @media (max-width: $bp-tablet) {
-  .section {
+  .bgImage {
     background-size: cover;
   }
 

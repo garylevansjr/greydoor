@@ -82,6 +82,7 @@ export default function Services() {
   const trackRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
   const bgRef = useRef<HTMLDivElement>(null);
+  const bgImageRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const tweenRef = useRef<gsap.core.Tween | null>(null);
 
@@ -137,6 +138,12 @@ export default function Services() {
               const offset = (p - i) * -15;
               img.style.transform = `translateX(${offset}px) scale(1.08)`;
             });
+
+            // Background image parallax — opposite direction to cards
+            if (bgImageRef.current) {
+              const bgOffset = self.progress * 8; // moves right as cards go left
+              bgImageRef.current.style.transform = `translateX(${bgOffset}%) scale(1.05)`;
+            }
 
             // Drive gradient background
             if (bgRef.current) {
@@ -201,6 +208,8 @@ export default function Services() {
 
   return (
     <section ref={sectionRef} className={styles.section} id="services">
+      {/* Parallax background image */}
+      <div ref={bgImageRef} className={styles.bgImage} />
       {/* Dynamic gradient background */}
       <div ref={bgRef} className={styles.bgGradient} />
 
