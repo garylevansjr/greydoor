@@ -112,19 +112,36 @@ export default function Services() {
         scrollTrigger: {
           trigger: section,
           start: 'top top',
-          end: () => `+=${SERVICES.length * window.innerHeight}`,
+          end: () => `+=${SERVICES.length * window.innerHeight * 0.6}`,
           pin: true,
-          scrub: 1,
+          scrub: 0.8,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
             const p = self.progress * SERVICES.length;
             const idx = Math.min(SERVICES.length - 1, Math.floor(p));
             setActiveIndex(idx);
 
+            // Per-card animations: scale, opacity, rotation based on proximity
+            cards.forEach((card, i) => {
+              const distance = Math.abs(p - i);
+              const scale = distance < 0.5 ? 1.08 - distance * 0.16 : Math.max(0.85, 1 - distance * 0.08);
+              const opacity = Math.max(0.45, 1 - distance * 0.25);
+              const rotateY = (p - i) * -2.5;
+              card.style.transform = `scale(${scale}) perspective(1200px) rotateY(${rotateY}deg)`;
+              card.style.opacity = String(opacity);
+            });
+
+            // Parallax on card images
+            const images = track.querySelectorAll<HTMLElement>('[data-svc-img]');
+            images.forEach((img, i) => {
+              const offset = (p - i) * -15;
+              img.style.transform = `translateX(${offset}px) scale(1.08)`;
+            });
+
             // Drive gradient background
             if (bgRef.current) {
               const nextIdx = Math.min(SERVICES.length - 1, idx + 1);
-              const t = p - Math.floor(p); // 0–1 between current and next
+              const t = p - Math.floor(p);
               const colorA = lerpColor(SERVICES[idx].accent, SERVICES[nextIdx].accent, t);
               const colorB = idx > 0
                 ? lerpColor(SERVICES[idx - 1].accent, SERVICES[idx].accent, t)
@@ -226,6 +243,7 @@ export default function Services() {
                     src={service.image}
                     alt={service.title}
                     className={styles.cardImage}
+                    data-svc-img
                   />
                   <div className={styles.cardOverlay} />
                   <span className={styles.cardNumber}>
