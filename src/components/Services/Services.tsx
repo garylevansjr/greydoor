@@ -17,7 +17,7 @@ const SERVICES = [
     title: 'Executive & Personal Assistance',
     excerpt:
       'Thoughtful, anticipatory support for individuals and families who need everything to run flawlessly — from calendar orchestration to complex logistics.',
-    image: '/assets/home/hero.png',
+    image: '/assets/services/ExecutivePersonalAssistance.jpg',
     accent: '#1D3B28',
   },
   {
@@ -25,7 +25,7 @@ const SERVICES = [
     title: 'Travel Coordination',
     excerpt:
       'Bespoke itineraries, seamless bookings, and on-the-ground coordination. Every detail considered so you can be fully present wherever you go.',
-    image: '/assets/home/hero.png',
+    image: '/assets/services/TravelCoordination.jpg',
     accent: '#68161A',
   },
   {
@@ -33,7 +33,7 @@ const SERVICES = [
     title: 'Holiday Gifting & Card Services',
     excerpt:
       'Curated, meaningful gifting and correspondence that reflects your taste and strengthens your relationships — handled with care and discretion.',
-    image: '/assets/home/hero.png',
+    image: '/assets/services/HolidayGiftingCardServices.jpg',
     accent: '#E2BC31',
   },
   {
@@ -41,7 +41,7 @@ const SERVICES = [
     title: 'Home & Personal Services',
     excerpt:
       'Vendor management, property oversight, household coordination, and the daily details that keep your personal world running beautifully.',
-    image: '/assets/home/hero.png',
+    image: '/assets/services/homePesonalServices.jpg',
     accent: '#638B48',
   },
   {
@@ -49,7 +49,7 @@ const SERVICES = [
     title: 'Personal Shopping & Styling',
     excerpt:
       'Elevated sourcing and styling for wardrobes, homes, and occasions — guided by an understanding of your preferences and lifestyle.',
-    image: '/assets/home/hero.png',
+    image: '/assets/services/PersonalShopping.jpg',
     accent: '#E8BDD8',
   },
   {
@@ -57,7 +57,7 @@ const SERVICES = [
     title: 'Event Planning',
     excerpt:
       'From intimate gatherings to milestone celebrations — flawlessly planned, beautifully executed, and entirely stress-free.',
-    image: '/assets/home/hero.png',
+    image: '/assets/services/EventPlaning.jpg',
     accent: '#68161A',
   },
 ];

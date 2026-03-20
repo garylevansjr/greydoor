@@ -188,14 +188,7 @@
 
 // Overlay description — top-left on the hero image
 .overlayDescWrap {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 3;
-  padding: clamp(2rem, 5vh, 4rem);
-  padding-left: 5vw;
-  pointer-events: none;
-  max-width: 36%;
+  display: none;
 }
 
 .overlayDescWord {
@@ -212,11 +205,11 @@
 
 .heroQuoteWrap {
   position: absolute;
-  top: 20%;
+  top: 8%;
   left: 0;
   z-index: 3;
-  padding-left: 15vw;
-  max-width: 51%;
+  padding-left: 8vw;
+  max-width: 55%;
   pointer-events: none;
   display: flex;
   flex-direction: column;
@@ -267,10 +260,6 @@
 
   .title {
     font-size: clamp(2.5rem, 12vw, 4rem);
-  }
-
-  .overlayDescWrap {
-    display: none;
   }
 
   .overlayTextWrap {
