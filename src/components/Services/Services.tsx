@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
-import { motion, useInView, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { easing } from '@/lib/animations';
@@ -64,45 +64,71 @@ const SERVICES = [
 
 export default function Services() {
   const sectionRef = useRef<HTMLElement>(null);
+  const trackRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
-  const titleInView = useInView(titleRef, { once: true, amount: 0.3 });
   const [activeIndex, setActiveIndex] = useState(0);
-  const gsapInitRef = useRef(false);
+  const tweenRef = useRef<gsap.core.Tween | null>(null);
 
+  // Desktop: GSAP ScrollTrigger pin + horizontal scroll
   useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-      const rect = sectionRef.current.getBoundingClientRect();
-      const sectionHeight = sectionRef.current.offsetHeight;
-      const viewportHeight = window.innerHeight;
-      const scrollInSection = -rect.top;
-      const scrollableHeight = sectionHeight - viewportHeight;
+    const section = sectionRef.current;
+    const track = trackRef.current;
+    if (!section || !track) return;
 
-      if (scrollInSection < 0 || scrollInSection > scrollableHeight) return;
+    // Only pin on desktop
+    if (window.innerWidth <= 768) return;
 
-      const progress = scrollInSection / scrollableHeight;
-      const newIndex = Math.min(
-        SERVICES.length - 1,
-        Math.floor(progress * SERVICES.length)
-      );
-      setActiveIndex(newIndex);
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (prefersReduced) return;
+
+    // Wait for layout
+    const raf = requestAnimationFrame(() => {
+      const cards = track.querySelectorAll<HTMLElement>('[data-svc-card]');
+      if (cards.length === 0) return;
+
+      const cardWidth = cards[0].offsetWidth;
+      const gap = parseFloat(getComputedStyle(track).gap) || 0;
+      const totalTravel = (cards.length - 1) * (cardWidth + gap);
+
+      const tween = gsap.to(track, {
+        x: -totalTravel,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: section,
+          start: 'top top',
+          end: () => `+=${SERVICES.length * window.innerHeight}`,
+          pin: true,
+          scrub: 1,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            const idx = Math.min(
+              SERVICES.length - 1,
+              Math.floor(self.progress * SERVICES.length)
+            );
+            setActiveIndex(idx);
+          },
+        },
+      });
+
+      tweenRef.current = tween;
+    });
+
+    return () => {
+      cancelAnimationFrame(raf);
+      tweenRef.current?.scrollTrigger?.kill();
+      tweenRef.current?.kill();
     };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   // GSAP parallax for background elements
   useEffect(() => {
     const section = sectionRef.current;
-    if (!section || gsapInitRef.current) return;
-    gsapInitRef.current = true;
+    if (!section) return;
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced) return;
 
     const ctx = gsap.context(() => {
-      // Background gradient orbs — float at different speeds
       gsap.utils.toArray<HTMLElement>('[data-parallax="svc-orb"]').forEach((orb, i) => {
         gsap.to(orb, {
           yPercent: -30 - i * 15,
@@ -116,7 +142,6 @@ export default function Services() {
         });
       });
 
-      // Hairline elements
       gsap.utils.toArray<HTMLElement>('[data-parallax="svc-line"]').forEach((line, i) => {
         gsap.to(line, {
           yPercent: -15 - i * 8,
@@ -130,7 +155,6 @@ export default function Services() {
         });
       });
 
-      // Large "Services" watermark — slow drift
       gsap.to('[data-parallax="svc-watermark"]', {
         yPercent: -20,
         ease: 'none',
@@ -163,95 +187,80 @@ export default function Services() {
         ))}
       </div>
 
-      <div className={styles.stickyWrap}>
-        <div className={styles.stickyInner}>
-          {/* Left — Service info */}
-          <div className={styles.contentSide}>
-            <motion.div
-              className={styles.sectionLabel}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8, ease: easing.luxury }}
-            >
-              <span className={styles.labelText}>What We Do</span>
-              <span className={styles.labelCount}>
-                {String(activeIndex + 1).padStart(2, '0')} / {String(SERVICES.length).padStart(2, '0')}
-              </span>
-            </motion.div>
-
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeIndex}
-                className={styles.serviceContent}
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.6, ease: easing.luxury }}
-              >
-                <h3 className={styles.serviceTitle}>{SERVICES[activeIndex].title}</h3>
-                <p className={styles.serviceExcerpt}>{SERVICES[activeIndex].excerpt}</p>
-
-                <a href="/services" className={styles.serviceLink}>
-                  <span>Learn More</span>
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                    <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
-                  </svg>
-                </a>
-              </motion.div>
-            </AnimatePresence>
-
-            {/* Progress dots */}
-            <div className={styles.dots}>
-              {SERVICES.map((_, i) => (
-                <div
-                  key={i}
-                  className={`${styles.dot} ${i === activeIndex ? styles.dotActive : ''}`}
-                />
-              ))}
-            </div>
-          </div>
-
-          {/* Right — Image card */}
-          <div className={styles.imageSide}>
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeIndex}
-                className={styles.imageCard}
-                initial={{ opacity: 0, scale: 0.95, y: 20 }}
-                animate={{ opacity: 1, scale: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 1.02, y: -10 }}
-                transition={{ duration: 0.7, ease: easing.luxury }}
-              >
-                <div
-                  className={styles.imageAccent}
-                  style={{ background: SERVICES[activeIndex].accent }}
-                />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img
-                  src={SERVICES[activeIndex].image}
-                  alt={SERVICES[activeIndex].title}
-                  className={styles.cardImage}
-                />
-                <div className={styles.cardOverlay} />
-                <span className={styles.cardNumber}>
-                  {String(activeIndex + 1).padStart(2, '0')}
-                </span>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-        </div>
-
-        {/* Large "Services" text */}
-        <div ref={titleRef} className={styles.bigTitle} data-parallax="svc-watermark">
-          <motion.span
-            initial={{ opacity: 0, y: 40 }}
-            animate={titleInView ? { opacity: 0.06, y: 0 } : {}}
-            transition={{ duration: 1.2, ease: easing.luxury }}
+      <div className={styles.stickyInner}>
+        {/* Header row: label + counter */}
+        <div className={styles.header}>
+          <motion.div
+            className={styles.sectionLabel}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, ease: easing.luxury }}
           >
-            Services
-          </motion.span>
+            <span className={styles.labelText}>What We Do</span>
+            <span className={styles.labelCount}>
+              {String(activeIndex + 1).padStart(2, '0')} / {String(SERVICES.length).padStart(2, '0')}
+            </span>
+          </motion.div>
         </div>
+
+        {/* Horizontal track */}
+        <div className={styles.trackWrap}>
+          <div ref={trackRef} className={styles.track}>
+            {SERVICES.map((service, i) => (
+              <article key={service.id} className={styles.card} data-svc-card>
+                <div className={styles.cardImageWrap}>
+                  <div
+                    className={styles.cardAccent}
+                    style={{ background: service.accent }}
+                  />
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={service.image}
+                    alt={service.title}
+                    className={styles.cardImage}
+                  />
+                  <div className={styles.cardOverlay} />
+                  <span className={styles.cardNumber}>
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                </div>
+                <div className={styles.cardBody}>
+                  <h3 className={styles.cardTitle}>{service.title}</h3>
+                  <p className={styles.cardExcerpt}>{service.excerpt}</p>
+                  <a href="/services" className={styles.cardLink}>
+                    <span>Learn More</span>
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+                      <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+
+        {/* Progress dots */}
+        <div className={styles.dots}>
+          {SERVICES.map((_, i) => (
+            <div
+              key={i}
+              className={`${styles.dot} ${i === activeIndex ? styles.dotActive : ''}`}
+            />
+          ))}
+        </div>
+      </div>
+
+      {/* Large "Services" watermark */}
+      <div ref={titleRef} className={styles.bigTitle} data-parallax="svc-watermark">
+        <motion.span
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 0.075, y: 0 }}
+          viewport={{ once: true, amount: 0.3 }}
+          transition={{ duration: 1.2, ease: easing.luxury }}
+        >
+          Services
+        </motion.span>
       </div>
     </section>
   );
