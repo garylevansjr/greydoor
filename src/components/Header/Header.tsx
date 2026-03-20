@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { easing } from '@/lib/animations';
 import TransitionLink from '@/components/TransitionLink/TransitionLink';
@@ -18,11 +18,23 @@ const NAV_ITEMS = [
 
 export default function Header({ show }: HeaderProps) {
   const [scrolled, setScrolled] = useState(false);
+  const [visible, setVisible] = useState(true);
   const [menuOpen, setMenuOpen] = useState(false);
+  const lastScrollY = useRef(0);
 
   useEffect(() => {
+    lastScrollY.current = window.scrollY;
+
     const handleScroll = () => {
-      setScrolled(window.scrollY > 80);
+      const currentY = window.scrollY;
+      setScrolled(currentY > 80);
+
+      if (currentY < 80) {
+        setVisible(true);
+      } else {
+        setVisible(currentY < lastScrollY.current);
+      }
+      lastScrollY.current = currentY;
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
@@ -35,8 +47,8 @@ export default function Header({ show }: HeaderProps) {
           <motion.header
             className={`${styles.header} ${scrolled ? styles.scrolled : ''}`}
             initial={{ y: -100, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1, ease: easing.luxury, delay: 0.3 }}
+            animate={{ y: visible || menuOpen ? 0 : -100, opacity: 1 }}
+            transition={{ duration: 0.4, ease: easing.luxury }}
           >
             <div className={styles.inner}>
               <div className={styles.spacer} />
