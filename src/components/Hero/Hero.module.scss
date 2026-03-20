@@ -259,6 +259,54 @@
   height: auto;
 }
 
+// ─── Mobile ───────────────────────────────────────────────
+@media (max-width: $bp-tablet) {
+  .hero {
+    padding-bottom: 3rem;
+  }
+
+  .title {
+    font-size: clamp(2.5rem, 12vw, 4rem);
+  }
+
+  .overlayDescWrap {
+    max-width: 55%;
+    padding-left: 4vw;
+    padding-top: 1.5rem;
+  }
+
+  .overlayDescWord {
+    font-size: 2.2vw;
+  }
+
+  .overlayTextWrap {
+    padding-right: 4vw;
+    padding-top: 1.5rem;
+  }
+
+  .overlayChar {
+    font-size: clamp(0.875rem, 4vw, 1.5rem);
+  }
+
+  .heroQuoteWrap {
+    top: 28%;
+    padding-left: 4vw;
+    max-width: 70%;
+  }
+
+  .heroQuote {
+    font-size: 6.5vw;
+  }
+
+  .heroQuoteMark {
+    left: -0.5em;
+  }
+
+  .heroSignature {
+    max-width: 250px;
+  }
+}
+
 .tagline {
   position: relative;
   z-index: 3;

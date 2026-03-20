@@ -192,3 +192,28 @@
   margin-top: $space-lg;
   text-align: center;
 }
+
+// ─── Mobile ───────────────────────────────────────────────
+@media (max-width: $bp-tablet) {
+  .footer {
+    padding: $space-xl $space-sm $space-lg;
+  }
+
+  .ctaHeading {
+    font-size: clamp(1.75rem, 7vw, 2.5rem);
+  }
+
+  .ctaBody {
+    font-size: 0.875rem;
+  }
+
+  .footerNav {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: $space-sm;
+  }
+
+  .watermark {
+    font-size: clamp(3rem, 12vw, 6rem);
+  }
+}

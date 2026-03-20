@@ -221,3 +221,40 @@
   );
   pointer-events: none;
 }
+
+// ─── Mobile ───────────────────────────────────────────────
+@media (max-width: $bp-tablet) {
+  .section {
+    padding: $space-xl $space-sm;
+  }
+
+  .inner {
+    gap: $space-lg;
+  }
+
+  .textSide {
+    gap: $space-sm;
+  }
+
+  .heading {
+    font-size: clamp(2rem, 8vw, 3rem);
+  }
+
+  .body {
+    font-size: 0.9375rem;
+    max-width: 100%;
+  }
+
+  .quote {
+    font-size: clamp(1.25rem, 5.5vw, 1.75rem);
+    max-width: 100%;
+  }
+
+  .signature {
+    max-width: 350px;
+  }
+
+  .imageFrame {
+    max-width: 100%;
+  }
+}

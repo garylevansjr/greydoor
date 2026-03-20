@@ -83,7 +83,7 @@
   align-items: center;
   justify-content: space-between;
   padding-bottom: $space-sm;
-  border-bottom: 1px solid rgba($white, 0.1);
+  border-bottom: 1px solid rgba($dark, 0.1);
 }
 
 .labelText {
@@ -91,7 +91,7 @@
   font-size: 0.6875rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: rgba($white, 0.5);
+  color: rgba($dark, 0.5);
   font-weight: 500;
 }
 
@@ -99,7 +99,7 @@
   font-family: $font-headline;
   font-size: 0.6875rem;
   letter-spacing: 0.15em;
-  color: rgba($white, 0.35);
+  color: rgba($dark, 0.35);
   font-weight: 400;
 }
 
@@ -265,12 +265,12 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: rgba($white, 0.2);
+  background: rgba($dark, 0.15);
   transition: all 0.5s $ease-luxury;
 }
 
 .dotActive {
-  background: rgba($white, 0.8);
+  background: rgba($dark, 0.6);
   transform: scale(1.3);
 }
 
