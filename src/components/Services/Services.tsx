@@ -62,10 +62,26 @@ const SERVICES = [
   },
 ];
 
+// Interpolate between two hex colors
+function lerpColor(a: string, b: string, t: number): string {
+  const parse = (hex: string) => [
+    parseInt(hex.slice(1, 3), 16),
+    parseInt(hex.slice(3, 5), 16),
+    parseInt(hex.slice(5, 7), 16),
+  ];
+  const [r1, g1, b1] = parse(a);
+  const [r2, g2, b2] = parse(b);
+  const r = Math.round(r1 + (r2 - r1) * t);
+  const g = Math.round(g1 + (g2 - g1) * t);
+  const bl = Math.round(b1 + (b2 - b1) * t);
+  return `rgb(${r},${g},${bl})`;
+}
+
 export default function Services() {
   const sectionRef = useRef<HTMLElement>(null);
   const trackRef = useRef<HTMLDivElement>(null);
   const titleRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
   const tweenRef = useRef<gsap.core.Tween | null>(null);
 
@@ -101,11 +117,20 @@ export default function Services() {
           scrub: 1,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
-            const idx = Math.min(
-              SERVICES.length - 1,
-              Math.floor(self.progress * SERVICES.length)
-            );
+            const p = self.progress * SERVICES.length;
+            const idx = Math.min(SERVICES.length - 1, Math.floor(p));
             setActiveIndex(idx);
+
+            // Drive gradient background
+            if (bgRef.current) {
+              const nextIdx = Math.min(SERVICES.length - 1, idx + 1);
+              const t = p - Math.floor(p); // 0–1 between current and next
+              const colorA = lerpColor(SERVICES[idx].accent, SERVICES[nextIdx].accent, t);
+              const colorB = idx > 0
+                ? lerpColor(SERVICES[idx - 1].accent, SERVICES[idx].accent, t)
+                : colorA;
+              bgRef.current.style.background = `radial-gradient(ellipse at 30% 40%, ${colorA}40 0%, transparent 60%), radial-gradient(ellipse at 70% 60%, ${colorB}30 0%, transparent 55%), radial-gradient(ellipse at 50% 50%, ${colorA}20 0%, transparent 70%)`;
+            }
           },
         },
       });
@@ -142,19 +167,6 @@ export default function Services() {
         });
       });
 
-      gsap.utils.toArray<HTMLElement>('[data-parallax="svc-line"]').forEach((line, i) => {
-        gsap.to(line, {
-          yPercent: -15 - i * 8,
-          ease: 'none',
-          scrollTrigger: {
-            trigger: section,
-            start: 'top bottom',
-            end: 'bottom top',
-            scrub: 1.5,
-          },
-        });
-      });
-
       gsap.to('[data-parallax="svc-watermark"]', {
         yPercent: -20,
         ease: 'none',
@@ -172,19 +184,14 @@ export default function Services() {
 
   return (
     <section ref={sectionRef} className={styles.section} id="services">
+      {/* Dynamic gradient background */}
+      <div ref={bgRef} className={styles.bgGradient} />
+
       {/* Parallax background depth elements */}
       <div className={styles.bgDepth}>
         <div className={styles.bgOrbGreen} data-parallax="svc-orb" />
         <div className={styles.bgOrbBurgundy} data-parallax="svc-orb" />
         <div className={styles.bgOrbDark} data-parallax="svc-orb" />
-        {[...Array(4)].map((_, i) => (
-          <div
-            key={i}
-            className={styles.bgLine}
-            style={{ left: `${20 + i * 20}%` }}
-            data-parallax="svc-line"
-          />
-        ))}
       </div>
 
       <div className={styles.stickyInner}>

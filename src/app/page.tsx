@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import LoaderIntro from '@/components/LoaderIntro/LoaderIntro';
 import Header from '@/components/Header/Header';
 import FixedCTA from '@/components/FixedCTA/FixedCTA';
@@ -13,6 +13,29 @@ import Footer from '@/components/Footer/Footer';
 export default function Home() {
   const [loaderComplete, setLoaderComplete] = useState(false);
   const [headerReady, setHeaderReady] = useState(false);
+
+  useEffect(() => {
+    if (!loaderComplete) {
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+      document.documentElement.style.position = 'fixed';
+      document.documentElement.style.inset = '0';
+      document.documentElement.style.width = '100%';
+    } else {
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+      document.documentElement.style.position = '';
+      document.documentElement.style.inset = '';
+      document.documentElement.style.width = '';
+    }
+    return () => {
+      document.documentElement.style.overflow = '';
+      document.body.style.overflow = '';
+      document.documentElement.style.position = '';
+      document.documentElement.style.inset = '';
+      document.documentElement.style.width = '';
+    };
+  }, [loaderComplete]);
 
   return (
     <>
