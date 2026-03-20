@@ -24,12 +24,15 @@ const OVERLAY_SEQUENCE = ['Lifestyle', 'Management', 'Agency'];
 const OVERLAY_INTERVAL = 2500; // ms between each swap
 const OVERLAY_START_DELAY = 1000; // ms after reveal before overlay starts
 
+const HERO_DESC = 'Grey Door is a premium concierge service that handles the details, logistics, and personal requests that keep busy lives running beautifully.';
+
 export default function Hero({ show, onHeaderReady }: HeroProps) {
   const sectionRef = useRef<HTMLElement>(null);
   const parallaxRef = useRef<boolean>(false);
   const [phase, setPhase] = useState<HeroPhase>('idle');
   const [overlayIndex, setOverlayIndex] = useState(0);
   const [showOverlay, setShowOverlay] = useState(false);
+  const [showDesc, setShowDesc] = useState(false);
   const phaseStarted = useRef(false);
 
   const startSequence = useCallback(() => {
@@ -50,6 +53,7 @@ export default function Hero({ show, onHeaderReady }: HeroProps) {
 
     // Overlay sequence: starts 1s after reveal (2s from start)
     setTimeout(() => setShowOverlay(true), 1000 + OVERLAY_START_DELAY);
+    setTimeout(() => setShowDesc(true), 1000 + OVERLAY_START_DELAY);
 
     OVERLAY_SEQUENCE.forEach((_, i) => {
       if (i === 0) return;
@@ -246,7 +250,7 @@ export default function Hero({ show, onHeaderReady }: HeroProps) {
           </motion.div>
           <div className={styles.imageOverlay} data-parallax="hero-overlay" />
 
-          {/* Overlay text sequence — center-left on image */}
+          {/* Overlay subtitle — top-right on image */}
           {showOverlay && (
             <div className={styles.overlayTextWrap}>
               <div className={styles.overlayTextInner}>
@@ -279,6 +283,29 @@ export default function Hero({ show, onHeaderReady }: HeroProps) {
                   </motion.span>
                 </AnimatePresence>
               </div>
+            </div>
+          )}
+
+          {/* Overlay description — top-left on image, word by word */}
+          {showDesc && (
+            <div className={styles.overlayDescWrap}>
+              <p>
+                {HERO_DESC.split(' ').map((word, i) => (
+                  <motion.span
+                    key={i}
+                    className={styles.overlayDescWord}
+                    initial={{ y: '100%', opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{
+                      duration: 0.5,
+                      ease: [0.16, 1, 0.3, 1],
+                      delay: i * 0.04,
+                    }}
+                  >
+                    {word}&nbsp;
+                  </motion.span>
+                ))}
+              </p>
             </div>
           )}
         </div>

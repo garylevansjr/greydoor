@@ -152,15 +152,17 @@
   white-space: nowrap;
 }
 
-// Overlay text on the hero image
+// Overlay subtitle — top-right on the hero image
 .overlayTextWrap {
   position: absolute;
-  inset: 0;
+  top: 0;
+  right: 0;
   z-index: 3;
   display: flex;
   align-items: flex-start;
-  justify-content: center;
-  padding-top: clamp(3rem, 8vh, 6rem);
+  justify-content: flex-end;
+  padding: clamp(2rem, 5vh, 4rem);
+  padding-right: 5vw;
   pointer-events: none;
 }
 
@@ -175,13 +177,37 @@
 .overlayChar {
   display: inline-block;
   font-family: $font-display;
-  font-size: clamp(2.25rem, 5.75vw, 5.1rem); // 40% smaller than title
+  font-size: clamp(1.125rem, 2.875vw, 2.55rem);
   line-height: 1;
   letter-spacing: -0.02em;
   font-weight: 400;
   text-transform: uppercase;
   color: rgba($white, 0.9);
   text-shadow: 0 2px 20px rgba($dark, 0.15);
+}
+
+// Overlay description — top-left on the hero image
+.overlayDescWrap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 3;
+  padding: clamp(2rem, 5vh, 4rem);
+  padding-left: 5vw;
+  pointer-events: none;
+  max-width: 40%;
+}
+
+.overlayDescWord {
+  display: inline-block;
+  font-family: 'brandon-grotesque', 'Brandon Grotesque', sans-serif;
+  font-size: 1.4vw;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+  color: rgba($white, 0.9);
+  text-shadow: 0 1px 10px rgba($dark, 0.15);
 }
 
 .tagline {
