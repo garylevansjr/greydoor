@@ -19,22 +19,24 @@ export default function FixedCTA({ show }: FixedCTAProps) {
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.8, ease: easing.luxury, delay: 0.6 }}
         >
-          <TransitionLink href="/contact" className={styles.cta}>
-            <svg
-              className={styles.chatIcon}
-              width="18"
-              height="18"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="1.5"
-              strokeLinecap="round"
-              strokeLinejoin="round"
-            >
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-            </svg>
-            <span className={styles.ctaText}>Contact Lauren</span>
-          </TransitionLink>
+          <div className={styles.glassContainer}>
+            <TransitionLink href="/contact" className={styles.cta}>
+              <svg
+                className={styles.chatIcon}
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="1.5"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+              </svg>
+              <span className={styles.ctaText}>Contact Lauren</span>
+            </TransitionLink>
+          </div>
         </motion.div>
       )}
     </AnimatePresence>
