@@ -34,7 +34,7 @@ export default function FixedCTA({ show }: FixedCTAProps) {
               >
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
               </svg>
-              <span className={styles.ctaText}>Contact Lauren</span>
+              <span className={styles.ctaText}>Start the Conversation</span>
             </TransitionLink>
           </div>
         </motion.div>

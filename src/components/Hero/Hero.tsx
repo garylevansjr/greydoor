@@ -365,7 +365,8 @@ export default function Hero({ show, onHeaderReady }: HeroProps) {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
               >
-                &ldquo;My goal is to make life feel beautifully handled.&rdquo;
+                <span className={styles.heroQuoteMark}>&ldquo;</span>
+                My goal is to make life feel beautifully handled.&rdquo;
               </motion.blockquote>
               <motion.div
                 className={styles.heroSignature}
