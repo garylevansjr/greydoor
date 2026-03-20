@@ -54,7 +54,7 @@ function AnimatedWord({ word, index, total }: { word: string; index: number; tot
       className={styles.word}
       style={{ y, opacity }}
     >
-      {word}{' '}
+      {word}&nbsp;
     </motion.span>
   );
 }
