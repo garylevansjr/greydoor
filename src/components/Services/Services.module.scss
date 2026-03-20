@@ -305,6 +305,10 @@
 
 // ─── Mobile: swipeable carousel ───────────────────────────────
 @media (max-width: $bp-tablet) {
+  .section {
+    background-size: cover;
+  }
+
   .stickyInner {
     height: auto;
     min-height: 80vh;
@@ -315,7 +319,7 @@
   }
 
   .trackWrap {
-    padding-bottom: 1.5rem;
+    padding-bottom: 2.5rem;
     align-items: flex-end;
     flex: 1;
   }
