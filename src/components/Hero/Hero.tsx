@@ -33,7 +33,11 @@ export default function Hero({ show, onHeaderReady }: HeroProps) {
   const [overlayIndex, setOverlayIndex] = useState(0);
   const [showOverlay, setShowOverlay] = useState(false);
   const [showDesc, setShowDesc] = useState(false);
+  const [showQuote, setShowQuote] = useState(false);
   const phaseStarted = useRef(false);
+  const heroSignatureRef = useRef<HTMLDivElement>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const heroLottieInstance = useRef<any>(null);
 
   const startSequence = useCallback(() => {
     if (phaseStarted.current) return;
@@ -54,6 +58,7 @@ export default function Hero({ show, onHeaderReady }: HeroProps) {
     // Overlay sequence: starts 1s after reveal (2s from start)
     setTimeout(() => setShowOverlay(true), 1000 + OVERLAY_START_DELAY);
     setTimeout(() => setShowDesc(true), 1000 + OVERLAY_START_DELAY);
+    setTimeout(() => setShowQuote(true), 1000 + OVERLAY_START_DELAY + 800);
 
     OVERLAY_SEQUENCE.forEach((_, i) => {
       if (i === 0) return;
@@ -66,6 +71,48 @@ export default function Hero({ show, onHeaderReady }: HeroProps) {
   useEffect(() => {
     if (show) startSequence();
   }, [show, startSequence]);
+
+  // Load and play Lottie signature when quote appears
+  useEffect(() => {
+    if (!showQuote) return;
+
+    // Wait a frame for the ref to be available
+    const raf = requestAnimationFrame(() => {
+      const container = heroSignatureRef.current;
+      if (!container) return;
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const win = window as any;
+
+      const init = (data: unknown) => {
+        if (!win.lottie) return;
+        heroLottieInstance.current = win.lottie.loadAnimation({
+          container,
+          renderer: 'svg',
+          loop: false,
+          autoplay: false,
+          animationData: data,
+        });
+        setTimeout(() => heroLottieInstance.current?.play(), 600);
+      };
+
+      const loadData = () => fetch('/assets/media/signature-white.json').then((r) => r.json());
+
+      if (win.lottie) {
+        loadData().then(init);
+      } else {
+        const script = document.createElement('script');
+        script.src = 'https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js';
+        script.onload = () => loadData().then(init);
+        document.head.appendChild(script);
+      }
+    });
+
+    return () => {
+      cancelAnimationFrame(raf);
+      heroLottieInstance.current?.destroy();
+    };
+  }, [showQuote]);
 
   useEffect(() => {
     if (!show || parallaxRef.current) return;
@@ -306,6 +353,28 @@ export default function Hero({ show, onHeaderReady }: HeroProps) {
                   </motion.span>
                 ))}
               </p>
+            </div>
+          )}
+
+          {/* Quote + signature — bottom-left on image */}
+          {showQuote && (
+            <div className={styles.heroQuoteWrap}>
+              <motion.blockquote
+                className={styles.heroQuote}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+              >
+                &ldquo;My goal is to make life feel beautifully handled.&rdquo;
+              </motion.blockquote>
+              <motion.div
+                className={styles.heroSignature}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1], delay: 0.4 }}
+              >
+                <div ref={heroSignatureRef} className={styles.heroSignatureLottie} />
+              </motion.div>
             </div>
           )}
         </div>
