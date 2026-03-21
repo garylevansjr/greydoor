@@ -1,5 +1,6 @@
 @use '../../styles/variables' as *;
 
+// ─── CTA Button (default state) ──────────────────────────
 .ctaWrapper {
   position: fixed;
   bottom: 2rem;
@@ -35,6 +36,8 @@
   padding: 1rem 2rem;
   background: $dark;
   color: $white;
+  border: none;
+  cursor: pointer;
   border-radius: 100px;
   font-family: $font-headline;
   font-size: 0.75rem;
@@ -82,5 +85,326 @@
     padding: 0.875rem 1.5rem;
     font-size: 0.625rem;
     gap: 0.5rem;
+  }
+}
+
+// ─── Form Overlay ─────────────────────────────────────────
+.formOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: $z-cta + 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba($dark, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 1.5rem;
+}
+
+// ─── Form Glass Wrapper (matches CTA button glass) ───────
+.formGlassWrap {
+  width: 100%;
+  max-width: 520px;
+  padding: 12px;
+  background: rgba($white, 0.25);
+  backdrop-filter: blur(20px) saturate(1.3);
+  -webkit-backdrop-filter: blur(20px) saturate(1.3);
+  border: 1px solid rgba($white, 0.4);
+  border-radius: 32px;
+  box-shadow:
+    0 24px 80px rgba($dark, 0.2),
+    0 8px 32px rgba($dark, 0.1),
+    inset 0 1px 0 rgba($white, 0.5),
+    inset 0 -1px 0 rgba($white, 0.1);
+}
+
+// ─── Form Inner Card (solid white) ───────────────────────
+.formGlass {
+  position: relative;
+  max-height: calc(90vh - 24px);
+  overflow-y: auto;
+  padding: 2.5rem 2rem 2rem;
+  background: $white;
+  border-radius: 22px;
+  box-shadow:
+    0 4px 20px rgba($dark, 0.08),
+    inset 0 1px 0 rgba($white, 0.8);
+
+  // Hide scrollbar
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+// ─── Close Button ─────────────────────────────────────────
+.closeBtn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  border-radius: 50%;
+  background: rgba($dark, 0.06);
+  color: $dark;
+  transition: background 0.3s ease, transform 0.3s ease;
+
+  &:hover {
+    background: rgba($dark, 0.12);
+    transform: rotate(90deg);
+  }
+}
+
+// ─── Form Intro ───────────────────────────────────────────
+.formIntro {
+  font-family: 'operetta-12', serif;
+  font-weight: 200;
+  font-size: clamp(1.125rem, 2vw, 1.375rem);
+  line-height: 1.5;
+  color: rgba($dark, 0.85);
+  margin-bottom: 1.75rem;
+  padding-right: 2rem;
+}
+
+// ─── Form ─────────────────────────────────────────────────
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.inputGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.inputWrap {
+  position: relative;
+}
+
+.input {
+  width: 100%;
+  padding: 0.875rem 1.125rem;
+  background: rgba($dark, 0.03);
+  border: 1px solid rgba($dark, 0.2);
+  border-radius: 12px;
+  font-family: $font-body;
+  font-size: 0.9375rem;
+  color: $dark;
+  outline: none;
+  transition: border-color 0.4s ease, background 0.4s ease, box-shadow 0.4s ease;
+
+  &::placeholder {
+    color: rgba($dark, 0.35);
+    font-family: $font-headline;
+    font-size: 0.75rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+  }
+
+  &:focus {
+    border-color: rgba($dark, 0.4);
+    background: rgba($dark, 0.02);
+    box-shadow: 0 0 0 3px rgba($dark, 0.05);
+  }
+}
+
+// ─── Services Grid ────────────────────────────────────────
+.servicesLabel {
+  font-family: $font-headline;
+  font-size: 0.6875rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba($dark, 0.4);
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.servicesGrid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+
+.serviceChip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.75rem 0.25rem;
+  background: rgba($dark, 0.03);
+  border: 1px solid rgba($dark, 0.1);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.35s $ease-luxury;
+
+  &:hover {
+    background: rgba($dark, 0.06);
+    border-color: rgba($dark, 0.18);
+    transform: translateY(-1px);
+  }
+}
+
+.serviceChipActive {
+  background: rgba($dark, 0.08);
+  border-color: rgba($dark, 0.3);
+  box-shadow:
+    0 2px 12px rgba($dark, 0.06),
+    inset 0 0 0 1px rgba($dark, 0.05);
+
+  &:hover {
+    background: rgba($dark, 0.12);
+    border-color: rgba($dark, 0.35);
+  }
+
+  .serviceLabel {
+    color: $dark;
+  }
+}
+
+.serviceIcon {
+  font-size: 1.25rem;
+  line-height: 1;
+}
+
+.serviceLabel {
+  font-family: $font-headline;
+  font-size: 0.5625rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: rgba($dark, 0.45);
+  font-weight: 500;
+  text-align: center;
+  line-height: 1.2;
+  transition: color 0.35s ease;
+}
+
+// ─── Submit Button ────────────────────────────────────────
+.submitBtn {
+  width: 100%;
+  padding: 1rem;
+  background: $dark;
+  color: $white;
+  border: none;
+  border-radius: 14px;
+  font-family: $font-headline;
+  font-size: 0.8125rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 52px;
+  box-shadow:
+    0 4px 20px rgba($dark, 0.15);
+  transition: background 0.4s ease, box-shadow 0.4s ease, color 0.4s ease;
+
+  &:hover:not(:disabled) {
+    background: $charcoal;
+    box-shadow:
+      0 8px 30px rgba($dark, 0.25);
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+.spinner {
+  display: block;
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba($white, 0.2);
+  border-top-color: $white;
+  border-radius: 50%;
+}
+
+// ─── Success State ────────────────────────────────────────
+.successGlass {
+  width: 100%;
+  max-width: 420px;
+  padding: 3rem 2rem;
+  background: $white;
+  border-radius: 22px;
+  box-shadow:
+    0 4px 20px rgba($dark, 0.08),
+    inset 0 1px 0 rgba($white, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.successCheck {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba($forest-green, 0.08);
+  border: 1px solid rgba($forest-green, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: $forest-green;
+  margin-bottom: 0.5rem;
+}
+
+.successTitle {
+  font-family: 'operetta-12', serif;
+  font-weight: 200;
+  font-size: clamp(1.5rem, 2.5vw, 2rem);
+  color: $dark;
+  line-height: 1.3;
+}
+
+.successSub {
+  font-family: $font-body;
+  font-size: 0.9375rem;
+  color: rgba($dark, 0.5);
+  line-height: 1.5;
+}
+
+// ─── Mobile ──────────────────────────────────────────────
+@media (max-width: $bp-tablet) {
+  .formGlassWrap {
+    padding: 8px;
+    border-radius: 24px;
+  }
+
+  .formGlass {
+    padding: 2rem 1.5rem 1.5rem;
+    max-height: calc(85vh - 16px);
+    border-radius: 18px;
+  }
+
+  .formIntro {
+    font-size: 1.0625rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .servicesGrid {
+    gap: 0.375rem;
+  }
+
+  .serviceChip {
+    padding: 0.625rem 0.125rem;
+  }
+
+  .serviceIcon {
+    font-size: 1.125rem;
+  }
+
+  .serviceLabel {
+    font-size: 0.5rem;
   }
 }
